@@ -35,8 +35,8 @@ int makeTheDirt(int pos, int rows, int columns) {
                             break;
                     }
                 }
-                strcpy(output, unmodified);
             }
+            strcpy(output, unmodified);
         }
     }
     return 0;
