@@ -12,7 +12,7 @@ int makeTheDirt(int pos, int rows, int columns) {
     for (int outputPos = 0; outputPos < columns; outputPos++) {
         output[outputPos] = ' ';
     }
-    output[pos] = 'A';
+    output[pos] = '#';
     char *unmodified =  malloc((columns+1)* sizeof(char));
     strcpy(unmodified, output);
     for (int i = 0; i < rows; i++) {
