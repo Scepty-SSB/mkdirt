@@ -6,37 +6,41 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define DIRT_CHAR '#'
+
 int makeTheDirt(int pos, int rows, int columns) {
     char *output = vector_create();
     vector_add(&output, columns);
     for (int outputPos = 0; outputPos < columns; outputPos++) {
         output[outputPos] = ' ';
     }
-    output[pos] = '#';
-    char *unmodified =  malloc((columns+1)* sizeof(char));
-    strcpy(unmodified, output);
+    output[pos] = DIRT_CHAR;
+    char *changes =  malloc((columns+1)* sizeof(char));
+    strcpy(changes, output);
     for (int i = 0; i < rows; i++) {
         if (i < floor((double)rows/5)){
             printf("\n");
         } else {
             printf("%s\n", output);
+            // set up next row
             for (int vecPos = 0; vecPos < columns; vecPos++) {
-                if (output[vecPos] == '#') {
+                if (output[vecPos] == DIRT_CHAR) {
                     switch (rand() % 3) {
                         case 1:
-                            unmodified[vecPos - 1] = '#';
+                            changes[vecPos - 1] = DIRT_CHAR;
                             break;
                         case 2: 
-                            unmodified[vecPos + 1] = '#';
+                            changes[vecPos + 1] = DIRT_CHAR;
                             break;
                         default:
-                            unmodified[vecPos - 1] = '#';
-                            unmodified[vecPos + 1] = '#';
+                            changes[vecPos - 1] = DIRT_CHAR;
+                            changes[vecPos + 1] = DIRT_CHAR;
                             break;
                     }
                 }
             }
-            strcpy(output, unmodified);
+            // prepare to output next row
+            strcpy(output, changes);
         }
     }
     return 0;
