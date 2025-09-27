@@ -86,6 +86,7 @@ int main (int argc, char ** argv) {
         printf("Insufficient arguments\n");
         return 0;
     }
+    printf("\x1b[38;5;52m");
     // get terminal size
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
@@ -102,4 +103,5 @@ int main (int argc, char ** argv) {
     // within the terminal
     position %= w.ws_col;
     makeTheDirt(position, w.ws_row, w.ws_col);
+    printf("\x1b[38;5;0m");
 }
