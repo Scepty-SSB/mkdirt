@@ -40,17 +40,39 @@ int makeTheDirt(int pos, int rows, int columns) {
                     switch (rand() % 3) {
                         case 1:
                             changes[vecPos - 1] = DIRT_CHAR;
+                            if (rand() % rows > rows/i) {
+                                changes[vecPos - 2] = DIRT_CHAR;
+                            }
                             break;
                         case 2: 
-                            changes[vecPos + 1] = DIRT_CHAR;
+                            if (vecPos < columns) {
+                                changes[vecPos + 1] = DIRT_CHAR;
+                                if (rand() % rows > rows/i && vecPos < columns - 1) {
+                                    changes[vecPos - 2] = DIRT_CHAR;
+                                }
+                            }
                             break;
                         default:
                             changes[vecPos - 1] = DIRT_CHAR;
-                            changes[vecPos + 1] = DIRT_CHAR;
+                            int consitentRand = rand();
+                            if (consitentRand % rows > rows/i) {
+                                changes[vecPos - 2] = DIRT_CHAR;
+                            }
+                            if (vecPos < columns) {
+                                changes[vecPos + 1] = DIRT_CHAR;
+                                if (consitentRand % rows > rows/i && vecPos < columns - 1) {
+                                changes[vecPos + 2] = DIRT_CHAR;
+                            }
+                            }
                             break;
                     }
+                } else if (rand() % (10*columns) == 1) {
+                    changes[vecPos] = DIRT_CHAR;
                 }
             }
+            // prevents a bug where one extra DIRT_CHAR was being printed
+            vector_pop(changes);
+            changes[columns] = '\0';
             // prepare to output next row
             strcpy(output, changes);
         }
