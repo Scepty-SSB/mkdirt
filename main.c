@@ -22,7 +22,7 @@ int makeTheDirt(int pos, int rows, int columns) {
             printf("%s\n", output);
             for (int vecPos = 0; vecPos < columns; vecPos++) {
                 if (output[vecPos] == '#') {
-                    switch (rand()% 3) {
+                    switch (rand() % 3) {
                         case 1:
                             unmodified[vecPos - 1] = '#';
                             break;
