@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include "vec.h"
@@ -22,6 +23,17 @@ int makeTheDirt(int pos, int rows, int columns) {
             printf("\n");
         } else {
             printf("%s\n", output);
+            bool isBottomFull = true;
+            int checkIter = 0;
+            while (isBottomFull && checkIter < columns) {
+                if (output[checkIter] != DIRT_CHAR) {
+                    isBottomFull = false;
+                }
+                checkIter++;
+            } 
+            if (isBottomFull) {
+                return 0;
+            }
             // set up next row
             for (int vecPos = 0; vecPos < columns; vecPos++) {
                 if (output[vecPos] == DIRT_CHAR) {
