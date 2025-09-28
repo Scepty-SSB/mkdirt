@@ -80,6 +80,7 @@ void makeTheDirt(int pos, int rows, int columns) {
             strcpy(output, changes);
         }
     }
+    free(changes);
     return;
 }
 
@@ -105,6 +106,7 @@ int main (int argc, char ** argv) {
     // mod num by the number of columns in the terminal to ensure position will always be
     // within the terminal
     position %= w.ws_col;
+    free(tempStr);
     makeTheDirt(position, w.ws_row, w.ws_col);
     // reset text color
     printf("\x1b[38;5;0m");
