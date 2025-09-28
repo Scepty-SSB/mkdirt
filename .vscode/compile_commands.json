@@ -1,0 +1,22 @@
+[
+  { "directory": ".",
+    "arguments": ["clang", 
+    		"-o",	
+				"mkdirt",
+				"-Wall",
+				"-Wextra",
+				"-Werror",
+				"-g",
+				"-std=c23"],
+    "file": "main.c" },
+  { "directory": ".",
+    "arguments": ["clang", 
+    		"-o",	
+				"mkdirt",
+				"-Wall",
+				"-Wextra",
+				"-Werror",
+				"-g",
+				"-std=c23"],
+    "file": "vec.c" }
+ ]

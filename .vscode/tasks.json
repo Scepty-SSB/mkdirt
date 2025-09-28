@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build mkdirt",
+			"type": "shell",
+			"command": "clang",
+			"args": [
+				"-o",	
+				"mkdirt",
+				"main.c",
+				"vec.c",
+				"-Wall",
+				"-Wextra",
+				"-Werror",
+				"-g",
+				"-std=c23"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"detail": "Generated task by Debugger."
+		}
+	]
+}
