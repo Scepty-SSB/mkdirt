@@ -9,7 +9,7 @@
 
 #define DIRT_CHAR '#'
 
-int makeTheDirt(int pos, int rows, int columns) {
+void makeTheDirt(int pos, int rows, int columns) {
     char *output = vector_create();
     vector_add(&output, columns);
     for (int outputPos = 0; outputPos < columns; outputPos++) {
@@ -32,7 +32,7 @@ int makeTheDirt(int pos, int rows, int columns) {
                 checkIter++;
             } 
             if (isBottomFull) {
-                return 0;
+                return;
             }
             // set up next row
             for (int vecPos = 0; vecPos < columns; vecPos++) {
@@ -40,6 +40,7 @@ int makeTheDirt(int pos, int rows, int columns) {
                     switch (rand() % 3) {
                         case 1:
                             changes[vecPos - 1] = DIRT_CHAR;
+                            changes[vecPos + 1] = DIRT_CHAR;
                             if (rand() % rows > rows/i) {
                                 changes[vecPos - 2] = DIRT_CHAR;
                             }
@@ -51,6 +52,7 @@ int makeTheDirt(int pos, int rows, int columns) {
                                     changes[vecPos - 2] = DIRT_CHAR;
                                 }
                             }
+                            changes[vecPos - 1] = DIRT_CHAR;
                             break;
                         default:
                             changes[vecPos - 1] = DIRT_CHAR;
@@ -61,8 +63,8 @@ int makeTheDirt(int pos, int rows, int columns) {
                             if (vecPos < columns) {
                                 changes[vecPos + 1] = DIRT_CHAR;
                                 if (consitentRand % rows > rows/i && vecPos < columns - 1) {
-                                changes[vecPos + 2] = DIRT_CHAR;
-                            }
+                                    changes[vecPos + 2] = DIRT_CHAR;
+                                }
                             }
                             break;
                     }
@@ -77,7 +79,7 @@ int makeTheDirt(int pos, int rows, int columns) {
             strcpy(output, changes);
         }
     }
-    return 0;
+    return;
 }
 
 
