@@ -8,6 +8,7 @@
 #include <string.h>
 
 #define DIRT_CHAR '#'
+#define TEXT_COLOR "\x1b[38;5;52m"
 
 void makeTheDirt(int pos, int rows, int columns) {
     char *output = vector_create();
@@ -88,7 +89,7 @@ int main (int argc, char ** argv) {
         printf("Insufficient arguments\n");
         return 0;
     }
-    printf("\x1b[38;5;52m");
+    printf(TEXT_COLOR);
     // get terminal size
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
@@ -96,7 +97,7 @@ int main (int argc, char ** argv) {
     char * tempStr = malloc(sizeof(argv[1]));
     strcpy(tempStr, argv[1]);
     int position = 0;
-    // this loop adds the ASCII values for every character in the string to get n integer that can later
+    // this loop adds the character encoding values for every character in the string to get n integer that can later
     // be used for the position
     for (int i = 0; strcmp(&tempStr[i], "\0") != 0; i++) {
        position += (int)tempStr[i];
@@ -105,5 +106,6 @@ int main (int argc, char ** argv) {
     // within the terminal
     position %= w.ws_col;
     makeTheDirt(position, w.ws_row, w.ws_col);
+    // reset text color
     printf("\x1b[38;5;0m");
 }
