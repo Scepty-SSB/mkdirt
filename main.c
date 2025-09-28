@@ -11,10 +11,12 @@
 #define DIRT_CHAR '#'
 #define TEXT_COLOR "\x1b[38;5;52m"
 
-void makeTheDirt(int pos, int rows, int columns) {
+/// Given the column number of the tip of a dirt pile and the size of the terminal,
+/// prints a pile of dirt.
+void makeTheDirt(unsigned pos, unsigned rows, unsigned columns) {
     char *output = vector_create();
     vector_add(&output, columns);
-    for (int outputPos = 0; outputPos < columns; outputPos++) {
+    for (vec_size_t outputPos = 0; outputPos < columns; outputPos++) {
         assert(outputPos < vector_size(output));
         output[outputPos] = ' ';
     }
@@ -22,13 +24,13 @@ void makeTheDirt(int pos, int rows, int columns) {
     char *changes =  malloc((columns+1)* sizeof(char));
     size_t changes_size = columns + 1;
     strcpy(changes, output);
-    for (int i = 0; i < rows; i++) {
+    for (unsigned i = 0; i < rows; i++) {
         if (i < floor((double)rows/5)){
             printf("\n");
         } else {
             printf("%s\n", output);
             bool isBottomFull = true;
-            int checkIter = 0;
+            unsigned checkIter = 0;
             while (isBottomFull && checkIter < columns) {
                 assert(checkIter < vector_size(output));
                 if (output[checkIter] != DIRT_CHAR) {
@@ -40,7 +42,7 @@ void makeTheDirt(int pos, int rows, int columns) {
                 return;
             }
             // set up next row
-            for (int vecPos = 0; vecPos < columns; vecPos++) {
+            for (unsigned vecPos = 0; vecPos < columns; vecPos++) {
                 assert(vecPos < vector_size(output));
                 if (output[vecPos] == DIRT_CHAR) {
                     switch (rand() % 3) {
@@ -66,7 +68,7 @@ void makeTheDirt(int pos, int rows, int columns) {
                         default:
                             assert(vecPos - 1 < changes_size);
                             changes[vecPos - 1] = DIRT_CHAR;
-                            int consitentRand = rand();
+                            unsigned consitentRand = (unsigned)rand();
                             if (consitentRand % rows > rows/i) {
                                 changes[vecPos - 2] = DIRT_CHAR;
                             }
@@ -111,11 +113,11 @@ int main (int argc, char ** argv) {
     // get position for first dirt piece
     char * tempStr = malloc(sizeof(*argv[1]));
     strcpy(tempStr, argv[1]);
-    int position = 0;
+    unsigned position = 0;
     // this loop adds the character encoding values for every character in the string to get n integer that can later
     // be used for the position
-    for (int i = 0; strcmp(&tempStr[i], "\0") != 0; i++) {
-       position += (int)tempStr[i];
+    for (unsigned i = 0; strcmp(&tempStr[i], "\0") != 0; i++) {
+       position += (unsigned)(unsigned char)tempStr[i];
     }
     // mod num by the number of columns in the terminal to ensure position will always be
     // within the terminal
