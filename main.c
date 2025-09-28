@@ -94,6 +94,7 @@ void makeTheDirt(int pos, int rows, int columns) {
             strcpy(output, changes);
         }
     }
+    free(changes);
     return;
 }
 
@@ -108,7 +109,7 @@ int main (int argc, char ** argv) {
     struct winsize w;
     ioctl(0, TIOCGWINSZ, &w);
     // get position for first dirt piece
-    char * tempStr = malloc(sizeof(argv[1]));
+    char * tempStr = malloc(sizeof(*argv[1]));
     strcpy(tempStr, argv[1]);
     int position = 0;
     // this loop adds the character encoding values for every character in the string to get n integer that can later
@@ -119,6 +120,7 @@ int main (int argc, char ** argv) {
     // mod num by the number of columns in the terminal to ensure position will always be
     // within the terminal
     position %= w.ws_col;
+    free(tempStr);
     makeTheDirt(position, w.ws_row, w.ws_col);
     // reset text color
     printf("\x1b[38;5;0m");
