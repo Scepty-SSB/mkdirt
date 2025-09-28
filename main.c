@@ -6,6 +6,7 @@
 #include <sys/ioctl.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #define DIRT_CHAR '#'
 #define TEXT_COLOR "\x1b[38;5;52m"
@@ -14,10 +15,12 @@ void makeTheDirt(int pos, int rows, int columns) {
     char *output = vector_create();
     vector_add(&output, columns);
     for (int outputPos = 0; outputPos < columns; outputPos++) {
+        assert(outputPos < vector_size(output));
         output[outputPos] = ' ';
     }
     output[pos] = DIRT_CHAR;
     char *changes =  malloc((columns+1)* sizeof(char));
+    size_t changes_size = columns + 1;
     strcpy(changes, output);
     for (int i = 0; i < rows; i++) {
         if (i < floor((double)rows/5)){
@@ -27,6 +30,7 @@ void makeTheDirt(int pos, int rows, int columns) {
             bool isBottomFull = true;
             int checkIter = 0;
             while (isBottomFull && checkIter < columns) {
+                assert(checkIter < vector_size(output));
                 if (output[checkIter] != DIRT_CHAR) {
                     isBottomFull = false;
                 }
@@ -37,9 +41,11 @@ void makeTheDirt(int pos, int rows, int columns) {
             }
             // set up next row
             for (int vecPos = 0; vecPos < columns; vecPos++) {
+                assert(vecPos < vector_size(output));
                 if (output[vecPos] == DIRT_CHAR) {
                     switch (rand() % 3) {
                         case 1:
+                            assert(vecPos + 1 < changes_size);
                             changes[vecPos - 1] = DIRT_CHAR;
                             changes[vecPos + 1] = DIRT_CHAR;
                             if (rand() % rows > rows/i) {
@@ -48,33 +54,41 @@ void makeTheDirt(int pos, int rows, int columns) {
                             break;
                         case 2: 
                             if (vecPos < columns) {
+                               assert(vecPos + 1 < changes_size);
                                 changes[vecPos + 1] = DIRT_CHAR;
                                 if (rand() % rows > rows/i && vecPos < columns - 1) {
-                                    changes[vecPos - 2] = DIRT_CHAR;
+                                  changes[vecPos - 2] = DIRT_CHAR;
                                 }
                             }
+                            assert(vecPos - 1 < changes_size);
                             changes[vecPos - 1] = DIRT_CHAR;
                             break;
                         default:
+                            assert(vecPos - 1 < changes_size);
                             changes[vecPos - 1] = DIRT_CHAR;
                             int consitentRand = rand();
                             if (consitentRand % rows > rows/i) {
                                 changes[vecPos - 2] = DIRT_CHAR;
                             }
                             if (vecPos < columns) {
+                                assert(vecPos + 1 < changes_size);
                                 changes[vecPos + 1] = DIRT_CHAR;
                                 if (consitentRand % rows > rows/i && vecPos < columns - 1) {
+                                    assert(vecPos + 2 < changes_size);
                                     changes[vecPos + 2] = DIRT_CHAR;
                                 }
                             }
                             break;
                     }
                 } else if (rand() % (10*columns) == 1) {
+                    assert(vecPos < changes_size);
                     changes[vecPos] = DIRT_CHAR;
                 }
             }
             // prevents a bug where one extra DIRT_CHAR was being printed
+            assert(changes_size > 0);
             vector_pop(changes);
+            assert(columns < changes_size);
             changes[columns] = '\0';
             // prepare to output next row
             strcpy(output, changes);
