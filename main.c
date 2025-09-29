@@ -13,7 +13,7 @@
 
 /// Given the column number of the tip of a dirt pile and the size of the terminal,
 /// prints a pile of dirt.
-void makeTheDirt(unsigned pos, unsigned rows, unsigned columns) {
+void printDirtPile(unsigned pos, unsigned rows, unsigned columns) {
     char *output = vector_create();
     vector_add(&output, columns);
     for (vec_size_t outputPos = 0; outputPos < columns; outputPos++) {
@@ -133,7 +133,7 @@ int main (int const argc, char const* const argv[]) {
     // an arbitrary but deterministic value that fits in the line
     unsigned tipColumn = hash(argv[1]) % w.ws_col;    
 
-    makeTheDirt(tipColumn, w.ws_row, w.ws_col);
+    printDirtPile(tipColumn, w.ws_row, w.ws_col);
     // reset text color
     printf("\x1b[38;5;0m");
 }
