@@ -130,11 +130,6 @@ int main (int const argc, char const* const argv[]) {
     // an arbitrary but deterministic value that fits in the line
     unsigned tipColumn = hash(argv[1]) % w.ws_col;    
 
-    
-    // mod num by the number of columns in the terminal to ensure position will always be
-    // within the terminal
-    tipColumn %= w.ws_col;
-
     makeTheDirt(tipColumn, w.ws_row, w.ws_col);
     // reset text color
     printf("\x1b[38;5;0m");
