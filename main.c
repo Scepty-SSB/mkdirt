@@ -100,30 +100,42 @@ void makeTheDirt(unsigned pos, unsigned rows, unsigned columns) {
     return;
 }
 
+typedef struct winsize winsize;
 
-int main (int argc, char ** argv) {
+winsize terminalSize() {
+    struct winsize w;
+    ioctl(0, TIOCGWINSZ, &w);
+    return w;
+}
+
+/// Returns a hash of `s`.
+unsigned hash(char const *const s) {
+    // get position for first dirt piece
+    unsigned r = 0;
+    // this loop adds the character encoding values for every character in the string to get n integer that can later
+    // be used for the position
+    for (unsigned i = 0; s[i] != 0; i++) {
+       r += (unsigned)(unsigned char)s[i];
+    }
+    return r;
+}
+
+int main (int const argc, char const* const argv[]) {
     if (argc < 2) {
         printf("Insufficient arguments\n");
         return 0;
     }
     printf(TEXT_COLOR);
-    // get terminal size
-    struct winsize w;
-    ioctl(0, TIOCGWINSZ, &w);
-    // get position for first dirt piece
-    char * tempStr = malloc(sizeof(*argv[1]));
-    strcpy(tempStr, argv[1]);
-    unsigned position = 0;
-    // this loop adds the character encoding values for every character in the string to get n integer that can later
-    // be used for the position
-    for (unsigned i = 0; strcmp(&tempStr[i], "\0") != 0; i++) {
-       position += (unsigned)(unsigned char)tempStr[i];
-    }
+    winsize w = terminalSize();
+    // an arbitrary but deterministic value that fits in the line
+    unsigned tipColumn = hash(argv[1]) % w.ws_col;    
+
+    
     // mod num by the number of columns in the terminal to ensure position will always be
     // within the terminal
-    position %= w.ws_col;
-    free(tempStr);
-    makeTheDirt(position, w.ws_row, w.ws_col);
+    tipColumn %= w.ws_col;
+
+    makeTheDirt(tipColumn, w.ws_row, w.ws_col);
     // reset text color
     printf("\x1b[38;5;0m");
 }
