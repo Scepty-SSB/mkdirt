@@ -20,6 +20,7 @@ void printDirtPile(unsigned pos, unsigned rows, unsigned columns) {
         assert(outputPos < vector_size(output));
         output[outputPos] = ' ';
     }
+    assert(pos < vector_size(output));
     output[pos] = DIRT_CHAR;
     char *changes =  malloc((columns+1)* sizeof(char));
     size_t changes_size = columns + 1;
@@ -134,6 +135,7 @@ int main (int const argc, char const* const argv[]) {
     unsigned tipColumn = hash(argv[1]) % w.ws_col;    
 
     printDirtPile(tipColumn, w.ws_row, w.ws_col);
+    
     // reset text color
     printf("\x1b[38;5;0m");
 }
