@@ -6,6 +6,7 @@
 			"type": "shell",
 			"command": "clang",
 			"args": [
+				"-fsanitize=address",
 				"-o",	
 				"mkdirt",
 				"main.c",
