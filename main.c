@@ -122,8 +122,8 @@ unsigned hash(char const *const s) {
 
 int main (int const argc, char const* const argv[]) {
     if (argc < 2) {
-        printf("Insufficient arguments\n");
-        return 0;
+        fprintf(stderr, "Insufficient arguments\n");
+        return -1;
     }
     printf(TEXT_COLOR);
     winsize w = terminalSize();
