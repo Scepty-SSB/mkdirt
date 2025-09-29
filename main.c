@@ -9,7 +9,7 @@
 #include <assert.h>
 
 #define DIRT_CHAR '#'
-#define TEXT_COLOR "\x1b[38;5;52m"
+#define SET_TEXT_COLOR "\x1b[38;5;52m"
 
 /// Given the column number of the tip of a dirt pile and the size of the terminal,
 /// prints a pile of dirt.
@@ -125,8 +125,11 @@ int main (int const argc, char const* const argv[]) {
         fprintf(stderr, "Insufficient arguments\n");
         return -1;
     }
-    printf(TEXT_COLOR);
+    // set output color on ANSI terminals
+    printf(SET_TEXT_COLOR);
+
     winsize w = terminalSize();
+    
     // an arbitrary but deterministic value that fits in the line
     unsigned tipColumn = hash(argv[1]) % w.ws_col;    
 
