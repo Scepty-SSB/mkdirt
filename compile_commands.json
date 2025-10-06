@@ -1,0 +1,28 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c23",
+      "-o",
+      "mkdirt",
+      "main.c"
+    ],
+    "directory": "/Users/moses/src/mkdirt",
+    "file": "/Users/moses/src/mkdirt/main.c",
+    "output": "/Users/moses/src/mkdirt/mkdirt"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c23",
+      "-o",
+      "mkdirt",
+      "vec.c"
+    ],
+    "directory": "/Users/moses/src/mkdirt",
+    "file": "/Users/moses/src/mkdirt/vec.c",
+    "output": "/Users/moses/src/mkdirt/mkdirt"
+  }
+]

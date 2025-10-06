@@ -2,3 +2,6 @@
 a.out
 /mkdirt
 *.dSYM
+.codechecker
+.cache
+.clang*

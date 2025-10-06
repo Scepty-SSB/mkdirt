@@ -11,6 +11,34 @@
 #define DIRT_CHAR '#'
 #define SET_TEXT_COLOR "\x1b[38;5;52m"
 
+/// The composition of a line of output.
+typedef struct {
+  unsigned leadingSpace;
+  unsigned dirtWidth;
+  unsigned trailingSpace;
+} Line;
+
+/// Returns a `Line` with the given values.
+Line newLine(unsigned leadingSpace, unsigned dirtWidth, unsigned trailingSpace) {
+  Line r = {leadingSpace, dirtWidth, trailingSpace};
+  return r;
+}
+
+/// Prints `n` copies of `c`.
+void printCopies(unsigned n, char c) {
+  for (unsigned i = 0; i < n; i++) {
+    (void)putc(c, stdout);
+  }
+}
+
+/// Prints `l`.
+void printLine(Line l) {
+  printCopies(l.leadingSpace, ' ');
+  printCopies(l.dirtWidth, DIRT_CHAR);
+  printCopies(l.trailingSpace, ' ');
+  (void)putc('\n', stdout);
+}
+
 /// Prints a `4/5*rows` x `columns` pile of dirt with the tip at `tipColumn`.
 ///
 /// - Precondition: `tipColumn < columns`.
@@ -25,7 +53,6 @@ void printDirtPile(unsigned tipColumn, unsigned rows, unsigned columns) {
   vector_add(&lineBuffer, '\0');
 
 
-  assert(tipColumn < vector_size(lineBuffer));
   lineBuffer[tipColumn] = DIRT_CHAR;
   char *changes = vector_copy(lineBuffer);
   size_t changes_size = columns + 1;
@@ -47,7 +74,7 @@ void printDirtPile(unsigned tipColumn, unsigned rows, unsigned columns) {
         checkIter++;
       }
       if (isBottomFull) {
-       vector_free(changes);
+        vector_free(changes);
         return;
       }
       // set up next row
