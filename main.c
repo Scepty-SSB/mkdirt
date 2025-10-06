@@ -12,23 +12,26 @@
 #define SET_TEXT_COLOR "\x1b[38;5;52m"
 
 /// Prints a `4/5*rows` x `columns` pile of dirt with the tip at `tipColumn`.
+///
+/// - Precondition: `tipColumn < columns`.
 void printDirtPile(unsigned tipColumn, unsigned rows, unsigned columns) {
+  assert(tipColumn < columns);
   char *lineBuffer = vector_create();
-  vector_add(&lineBuffer, columns);
-  assert(vector_size(lineBuffer) == columns);
 
   // fill lineBuffer with space characters
-  for (vec_size_t outputPos = 0; outputPos < columns; outputPos++) {
-    assert(outputPos < vector_size(lineBuffer));
-    lineBuffer[outputPos] = ' ';
+  for (vec_size_t i = 0; i < columns; i++) {
+    vector_add(&lineBuffer, ' ');
   }
+  vector_add(&lineBuffer, '\0');
 
 
   assert(tipColumn < vector_size(lineBuffer));
   lineBuffer[tipColumn] = DIRT_CHAR;
-  char *changes = malloc((columns + 1) * sizeof(char));
+  char *changes = vector_copy(lineBuffer);
   size_t changes_size = columns + 1;
   strcpy(changes, lineBuffer);
+
+
   for (unsigned i = 0; i < rows; i++) {
     if (i < floor((double)rows / 5)) {
       printf("\n");
