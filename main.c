@@ -76,7 +76,9 @@ void printDirtPile(unsigned tipColumn, unsigned rows, unsigned columns) {
   Line currentLine = newLine(tipColumn, 1, columns - (1 + tipColumn));
   for (unsigned i = 1; i <= rows; i++) {
     printLine(currentLine);
-    currentLine = growDirt(currentLine, (unsigned)rand() % i, (unsigned)rand() % i);
+
+    // Ternary operators used to ensure that the pile always grows from line 1 to line 2. Makes the pile look more natural.
+    currentLine = growDirt(currentLine, i == 1 ? 1 : (unsigned)rand() % i, i == 1 ? 1 : (unsigned)rand() % i);
     if (currentLine.dirtWidth == lineWidth(currentLine)) {
       return;
     }
