@@ -7,10 +7,9 @@
 			"command": "clang",
 			"args": [
 				"-fsanitize=address",
-				"-o",	
+				"-o",
 				"mkdirt",
 				"main.c",
-				"vec.c",
 				"-Wall",
 				"-Wextra",
 				"-Werror",
